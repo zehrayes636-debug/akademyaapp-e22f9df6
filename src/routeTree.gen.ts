@@ -9,12 +9,50 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TestRouteImport } from './routes/test'
+import { Route as SorularRouteImport } from './routes/sorular'
+import { Route as ProgramRouteImport } from './routes/program'
+import { Route as PanelRouteImport } from './routes/panel'
+import { Route as GorevlerRouteImport } from './routes/gorevler'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AsistanRouteImport } from './routes/asistan'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SorularIdRouteImport } from './routes/sorular.$id'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 
+const TestRoute = TestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SorularRoute = SorularRouteImport.update({
+  id: '/sorular',
+  path: '/sorular',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgramRoute = ProgramRouteImport.update({
+  id: '/program',
+  path: '/program',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PanelRoute = PanelRouteImport.update({
+  id: '/panel',
+  path: '/panel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GorevlerRoute = GorevlerRouteImport.update({
+  id: '/gorevler',
+  path: '/gorevler',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AsistanRoute = AsistanRouteImport.update({
+  id: '/asistan',
+  path: '/asistan',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,40 +60,154 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SorularIdRoute = SorularIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => SorularRoute,
+} as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/asistan': typeof AsistanRoute
   '/auth': typeof AuthRoute
+  '/gorevler': typeof GorevlerRoute
+  '/panel': typeof PanelRoute
+  '/program': typeof ProgramRoute
+  '/sorular': typeof SorularRouteWithChildren
+  '/test': typeof TestRoute
+  '/api/chat': typeof ApiChatRoute
+  '/sorular/$id': typeof SorularIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/asistan': typeof AsistanRoute
   '/auth': typeof AuthRoute
+  '/gorevler': typeof GorevlerRoute
+  '/panel': typeof PanelRoute
+  '/program': typeof ProgramRoute
+  '/sorular': typeof SorularRouteWithChildren
+  '/test': typeof TestRoute
+  '/api/chat': typeof ApiChatRoute
+  '/sorular/$id': typeof SorularIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/asistan': typeof AsistanRoute
   '/auth': typeof AuthRoute
+  '/gorevler': typeof GorevlerRoute
+  '/panel': typeof PanelRoute
+  '/program': typeof ProgramRoute
+  '/sorular': typeof SorularRouteWithChildren
+  '/test': typeof TestRoute
+  '/api/chat': typeof ApiChatRoute
+  '/sorular/$id': typeof SorularIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth'
+  fullPaths:
+    | '/'
+    | '/asistan'
+    | '/auth'
+    | '/gorevler'
+    | '/panel'
+    | '/program'
+    | '/sorular'
+    | '/test'
+    | '/api/chat'
+    | '/sorular/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth'
-  id: '__root__' | '/' | '/auth'
+  to:
+    | '/'
+    | '/asistan'
+    | '/auth'
+    | '/gorevler'
+    | '/panel'
+    | '/program'
+    | '/sorular'
+    | '/test'
+    | '/api/chat'
+    | '/sorular/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/asistan'
+    | '/auth'
+    | '/gorevler'
+    | '/panel'
+    | '/program'
+    | '/sorular'
+    | '/test'
+    | '/api/chat'
+    | '/sorular/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AsistanRoute: typeof AsistanRoute
   AuthRoute: typeof AuthRoute
+  GorevlerRoute: typeof GorevlerRoute
+  PanelRoute: typeof PanelRoute
+  ProgramRoute: typeof ProgramRoute
+  SorularRoute: typeof SorularRouteWithChildren
+  TestRoute: typeof TestRoute
+  ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sorular': {
+      id: '/sorular'
+      path: '/sorular'
+      fullPath: '/sorular'
+      preLoaderRoute: typeof SorularRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/program': {
+      id: '/program'
+      path: '/program'
+      fullPath: '/program'
+      preLoaderRoute: typeof ProgramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/panel': {
+      id: '/panel'
+      path: '/panel'
+      fullPath: '/panel'
+      preLoaderRoute: typeof PanelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gorevler': {
+      id: '/gorevler'
+      path: '/gorevler'
+      fullPath: '/gorevler'
+      preLoaderRoute: typeof GorevlerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/asistan': {
+      id: '/asistan'
+      path: '/asistan'
+      fullPath: '/asistan'
+      preLoaderRoute: typeof AsistanRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -65,12 +217,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sorular/$id': {
+      id: '/sorular/$id'
+      path: '/$id'
+      fullPath: '/sorular/$id'
+      preLoaderRoute: typeof SorularIdRouteImport
+      parentRoute: typeof SorularRoute
+    }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface SorularRouteChildren {
+  SorularIdRoute: typeof SorularIdRoute
+}
+
+const SorularRouteChildren: SorularRouteChildren = {
+  SorularIdRoute: SorularIdRoute,
+}
+
+const SorularRouteWithChildren =
+  SorularRoute._addFileChildren(SorularRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AsistanRoute: AsistanRoute,
   AuthRoute: AuthRoute,
+  GorevlerRoute: GorevlerRoute,
+  PanelRoute: PanelRoute,
+  ProgramRoute: ProgramRoute,
+  SorularRoute: SorularRouteWithChildren,
+  TestRoute: TestRoute,
+  ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
