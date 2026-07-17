@@ -14,16 +14,464 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      ai_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ai_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "ai_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      comments: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          question_id: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          question_id: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          question_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      exams: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          next_exam_date: string | null
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          next_exam_date?: string | null
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          next_exam_date?: string | null
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      favorites: {
+        Row: {
+          created_at: string
+          id: string
+          question_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          question_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          question_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      question_attempts: {
+        Row: {
+          created_at: string
+          id: string
+          is_correct: boolean | null
+          question_id: string
+          selected_option: string | null
+          session_id: string | null
+          time_spent_sec: number | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_correct?: boolean | null
+          question_id: string
+          selected_option?: string | null
+          session_id?: string | null
+          time_spent_sec?: number | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_correct?: boolean | null
+          question_id?: string
+          selected_option?: string | null
+          session_id?: string | null
+          time_spent_sec?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "question_attempts_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      questions: {
+        Row: {
+          correct_option: string
+          created_at: string
+          difficulty: string | null
+          explanation: string | null
+          id: string
+          image_url: string | null
+          options: Json
+          question_text: string
+          source: string | null
+          topic_id: string
+          year: number | null
+        }
+        Insert: {
+          correct_option: string
+          created_at?: string
+          difficulty?: string | null
+          explanation?: string | null
+          id?: string
+          image_url?: string | null
+          options: Json
+          question_text: string
+          source?: string | null
+          topic_id: string
+          year?: number | null
+        }
+        Update: {
+          correct_option?: string
+          created_at?: string
+          difficulty?: string | null
+          explanation?: string | null
+          id?: string
+          image_url?: string | null
+          options?: Json
+          question_text?: string
+          source?: string | null
+          topic_id?: string
+          year?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "questions_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      study_plan_slots: {
+        Row: {
+          color: string | null
+          created_at: string
+          day_of_week: number
+          end_time: string
+          id: string
+          notes: string | null
+          start_time: string
+          subject_id: string | null
+          title: string
+          topic_id: string | null
+          user_id: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          day_of_week: number
+          end_time: string
+          id?: string
+          notes?: string | null
+          start_time: string
+          subject_id?: string | null
+          title: string
+          topic_id?: string | null
+          user_id: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          day_of_week?: number
+          end_time?: string
+          id?: string
+          notes?: string | null
+          start_time?: string
+          subject_id?: string | null
+          title?: string
+          topic_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "study_plan_slots_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "study_plan_slots_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subjects: {
+        Row: {
+          exam_id: string
+          id: string
+          name: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          exam_id: string
+          id?: string
+          name: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          exam_id?: string
+          id?: string
+          name?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subjects_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tasks: {
+        Row: {
+          created_at: string
+          description: string | null
+          due_at: string | null
+          id: string
+          is_done: boolean
+          priority: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          due_at?: string | null
+          id?: string
+          is_done?: boolean
+          priority?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          due_at?: string | null
+          id?: string
+          is_done?: boolean
+          priority?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      topics: {
+        Row: {
+          id: string
+          name: string
+          slug: string
+          sort_order: number
+          subject_id: string
+          summary: string | null
+        }
+        Insert: {
+          id?: string
+          name: string
+          slug: string
+          sort_order?: number
+          subject_id: string
+          summary?: string | null
+        }
+        Update: {
+          id?: string
+          name?: string
+          slug?: string
+          sort_order?: number
+          subject_id?: string
+          summary?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "topics_subject_id_fkey"
+            columns: ["subject_id"]
+            isOneToOne: false
+            referencedRelation: "subjects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +598,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
