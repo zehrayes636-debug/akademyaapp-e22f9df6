@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestRouteImport } from './routes/test'
 import { Route as SorularRouteImport } from './routes/sorular'
+import { Route as SifreSifirlaRouteImport } from './routes/sifre-sifirla'
 import { Route as ProgramRouteImport } from './routes/program'
 import { Route as PanelRouteImport } from './routes/panel'
 import { Route as GorevlerRouteImport } from './routes/gorevler'
@@ -28,6 +29,11 @@ const TestRoute = TestRouteImport.update({
 const SorularRoute = SorularRouteImport.update({
   id: '/sorular',
   path: '/sorular',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SifreSifirlaRoute = SifreSifirlaRouteImport.update({
+  id: '/sifre-sifirla',
+  path: '/sifre-sifirla',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProgramRoute = ProgramRouteImport.update({
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/gorevler': typeof GorevlerRoute
   '/panel': typeof PanelRoute
   '/program': typeof ProgramRoute
+  '/sifre-sifirla': typeof SifreSifirlaRoute
   '/sorular': typeof SorularRouteWithChildren
   '/test': typeof TestRoute
   '/api/chat': typeof ApiChatRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/gorevler': typeof GorevlerRoute
   '/panel': typeof PanelRoute
   '/program': typeof ProgramRoute
+  '/sifre-sifirla': typeof SifreSifirlaRoute
   '/sorular': typeof SorularRouteWithChildren
   '/test': typeof TestRoute
   '/api/chat': typeof ApiChatRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/gorevler': typeof GorevlerRoute
   '/panel': typeof PanelRoute
   '/program': typeof ProgramRoute
+  '/sifre-sifirla': typeof SifreSifirlaRoute
   '/sorular': typeof SorularRouteWithChildren
   '/test': typeof TestRoute
   '/api/chat': typeof ApiChatRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/gorevler'
     | '/panel'
     | '/program'
+    | '/sifre-sifirla'
     | '/sorular'
     | '/test'
     | '/api/chat'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
     | '/gorevler'
     | '/panel'
     | '/program'
+    | '/sifre-sifirla'
     | '/sorular'
     | '/test'
     | '/api/chat'
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/gorevler'
     | '/panel'
     | '/program'
+    | '/sifre-sifirla'
     | '/sorular'
     | '/test'
     | '/api/chat'
@@ -154,6 +166,7 @@ export interface RootRouteChildren {
   GorevlerRoute: typeof GorevlerRoute
   PanelRoute: typeof PanelRoute
   ProgramRoute: typeof ProgramRoute
+  SifreSifirlaRoute: typeof SifreSifirlaRoute
   SorularRoute: typeof SorularRouteWithChildren
   TestRoute: typeof TestRoute
   ApiChatRoute: typeof ApiChatRoute
@@ -173,6 +186,13 @@ declare module '@tanstack/react-router' {
       path: '/sorular'
       fullPath: '/sorular'
       preLoaderRoute: typeof SorularRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sifre-sifirla': {
+      id: '/sifre-sifirla'
+      path: '/sifre-sifirla'
+      fullPath: '/sifre-sifirla'
+      preLoaderRoute: typeof SifreSifirlaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/program': {
@@ -252,6 +272,7 @@ const rootRouteChildren: RootRouteChildren = {
   GorevlerRoute: GorevlerRoute,
   PanelRoute: PanelRoute,
   ProgramRoute: ProgramRoute,
+  SifreSifirlaRoute: SifreSifirlaRoute,
   SorularRoute: SorularRouteWithChildren,
   TestRoute: TestRoute,
   ApiChatRoute: ApiChatRoute,
@@ -259,13 +280,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
