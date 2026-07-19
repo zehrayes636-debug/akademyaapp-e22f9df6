@@ -3,6 +3,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { BookOpen, LayoutDashboard, CalendarDays, CheckSquare, Sparkles, LogOut, User as UserIcon, Menu, X } from "lucide-react";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import type { User } from "@supabase/supabase-js";
 
 const NAV = [
@@ -54,6 +55,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </nav>
 
           <div className="hidden items-center gap-2 md:flex">
+            <ThemeToggle />
             {user ? (
               <>
                 <div className="flex items-center gap-2 rounded-md border border-border bg-card px-2 py-1 text-xs">
@@ -67,9 +69,12 @@ export function AppShell({ children }: { children: ReactNode }) {
             )}
           </div>
 
-          <button className="md:hidden rounded-md p-2 hover:bg-secondary" onClick={() => setOpen(v => !v)} aria-label="Menü">
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <div className="flex items-center gap-1 md:hidden">
+            <ThemeToggle />
+            <button className="rounded-md p-2 hover:bg-secondary" onClick={() => setOpen(v => !v)} aria-label="Menü">
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
 
         {open && (
