@@ -2,13 +2,14 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { BookOpen, LayoutDashboard, CalendarDays, CheckSquare, Sparkles, LogOut, User as UserIcon, Menu, X } from "lucide-react";
+import { BookOpen, LayoutDashboard, CalendarDays, CheckSquare, Sparkles, LogOut, User as UserIcon, Menu, X, XCircle } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import type { User } from "@supabase/supabase-js";
 
 const NAV = [
   { to: "/", label: "Ana Sayfa", icon: null },
   { to: "/sorular", label: "Soru Bankası", icon: BookOpen },
+  { to: "/yanlislarim", label: "Yanlışlarım", icon: XCircle },
   { to: "/panel", label: "Panelim", icon: LayoutDashboard },
   { to: "/program", label: "Program", icon: CalendarDays },
   { to: "/gorevler", label: "Görevler", icon: CheckSquare },
@@ -38,7 +39,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </div>
             <div className="leading-tight">
               <div className="font-serif text-lg text-foreground">Akademya</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">YKS · KPSS</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">TYT · AYT · KPSS · LGS</div>
             </div>
           </Link>
 

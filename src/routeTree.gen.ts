@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as YanlislarimRouteImport } from './routes/yanlislarim'
 import { Route as TestRouteImport } from './routes/test'
 import { Route as SorularRouteImport } from './routes/sorular'
 import { Route as SifreSifirlaRouteImport } from './routes/sifre-sifirla'
@@ -21,6 +22,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SorularIdRouteImport } from './routes/sorular.$id'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
+const YanlislarimRoute = YanlislarimRouteImport.update({
+  id: '/yanlislarim',
+  path: '/yanlislarim',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TestRoute = TestRouteImport.update({
   id: '/test',
   path: '/test',
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/sifre-sifirla': typeof SifreSifirlaRoute
   '/sorular': typeof SorularRouteWithChildren
   '/test': typeof TestRoute
+  '/yanlislarim': typeof YanlislarimRoute
   '/api/chat': typeof ApiChatRoute
   '/sorular/$id': typeof SorularIdRoute
 }
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/sifre-sifirla': typeof SifreSifirlaRoute
   '/sorular': typeof SorularRouteWithChildren
   '/test': typeof TestRoute
+  '/yanlislarim': typeof YanlislarimRoute
   '/api/chat': typeof ApiChatRoute
   '/sorular/$id': typeof SorularIdRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/sifre-sifirla': typeof SifreSifirlaRoute
   '/sorular': typeof SorularRouteWithChildren
   '/test': typeof TestRoute
+  '/yanlislarim': typeof YanlislarimRoute
   '/api/chat': typeof ApiChatRoute
   '/sorular/$id': typeof SorularIdRoute
 }
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/sifre-sifirla'
     | '/sorular'
     | '/test'
+    | '/yanlislarim'
     | '/api/chat'
     | '/sorular/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/sifre-sifirla'
     | '/sorular'
     | '/test'
+    | '/yanlislarim'
     | '/api/chat'
     | '/sorular/$id'
   id:
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/sifre-sifirla'
     | '/sorular'
     | '/test'
+    | '/yanlislarim'
     | '/api/chat'
     | '/sorular/$id'
   fileRoutesById: FileRoutesById
@@ -169,11 +181,19 @@ export interface RootRouteChildren {
   SifreSifirlaRoute: typeof SifreSifirlaRoute
   SorularRoute: typeof SorularRouteWithChildren
   TestRoute: typeof TestRoute
+  YanlislarimRoute: typeof YanlislarimRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/yanlislarim': {
+      id: '/yanlislarim'
+      path: '/yanlislarim'
+      fullPath: '/yanlislarim'
+      preLoaderRoute: typeof YanlislarimRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/test': {
       id: '/test'
       path: '/test'
@@ -275,6 +295,7 @@ const rootRouteChildren: RootRouteChildren = {
   SifreSifirlaRoute: SifreSifirlaRoute,
   SorularRoute: SorularRouteWithChildren,
   TestRoute: TestRoute,
+  YanlislarimRoute: YanlislarimRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
