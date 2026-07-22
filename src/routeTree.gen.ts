@@ -15,6 +15,7 @@ import { Route as SorularRouteImport } from './routes/sorular'
 import { Route as SifreSifirlaRouteImport } from './routes/sifre-sifirla'
 import { Route as ProgramRouteImport } from './routes/program'
 import { Route as PanelRouteImport } from './routes/panel'
+import { Route as KonularRouteImport } from './routes/konular'
 import { Route as GorevlerRouteImport } from './routes/gorevler'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AsistanRouteImport } from './routes/asistan'
@@ -50,6 +51,11 @@ const ProgramRoute = ProgramRouteImport.update({
 const PanelRoute = PanelRouteImport.update({
   id: '/panel',
   path: '/panel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KonularRoute = KonularRouteImport.update({
+  id: '/konular',
+  path: '/konular',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GorevlerRoute = GorevlerRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/asistan': typeof AsistanRoute
   '/auth': typeof AuthRoute
   '/gorevler': typeof GorevlerRoute
+  '/konular': typeof KonularRoute
   '/panel': typeof PanelRoute
   '/program': typeof ProgramRoute
   '/sifre-sifirla': typeof SifreSifirlaRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/asistan': typeof AsistanRoute
   '/auth': typeof AuthRoute
   '/gorevler': typeof GorevlerRoute
+  '/konular': typeof KonularRoute
   '/panel': typeof PanelRoute
   '/program': typeof ProgramRoute
   '/sifre-sifirla': typeof SifreSifirlaRoute
@@ -117,6 +125,7 @@ export interface FileRoutesById {
   '/asistan': typeof AsistanRoute
   '/auth': typeof AuthRoute
   '/gorevler': typeof GorevlerRoute
+  '/konular': typeof KonularRoute
   '/panel': typeof PanelRoute
   '/program': typeof ProgramRoute
   '/sifre-sifirla': typeof SifreSifirlaRoute
@@ -133,6 +142,7 @@ export interface FileRouteTypes {
     | '/asistan'
     | '/auth'
     | '/gorevler'
+    | '/konular'
     | '/panel'
     | '/program'
     | '/sifre-sifirla'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/asistan'
     | '/auth'
     | '/gorevler'
+    | '/konular'
     | '/panel'
     | '/program'
     | '/sifre-sifirla'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/asistan'
     | '/auth'
     | '/gorevler'
+    | '/konular'
     | '/panel'
     | '/program'
     | '/sifre-sifirla'
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   AsistanRoute: typeof AsistanRoute
   AuthRoute: typeof AuthRoute
   GorevlerRoute: typeof GorevlerRoute
+  KonularRoute: typeof KonularRoute
   PanelRoute: typeof PanelRoute
   ProgramRoute: typeof ProgramRoute
   SifreSifirlaRoute: typeof SifreSifirlaRoute
@@ -227,6 +240,13 @@ declare module '@tanstack/react-router' {
       path: '/panel'
       fullPath: '/panel'
       preLoaderRoute: typeof PanelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/konular': {
+      id: '/konular'
+      path: '/konular'
+      fullPath: '/konular'
+      preLoaderRoute: typeof KonularRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gorevler': {
@@ -290,6 +310,7 @@ const rootRouteChildren: RootRouteChildren = {
   AsistanRoute: AsistanRoute,
   AuthRoute: AuthRoute,
   GorevlerRoute: GorevlerRoute,
+  KonularRoute: KonularRoute,
   PanelRoute: PanelRoute,
   ProgramRoute: ProgramRoute,
   SifreSifirlaRoute: SifreSifirlaRoute,
