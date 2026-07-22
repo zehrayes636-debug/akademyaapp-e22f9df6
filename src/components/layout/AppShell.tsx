@@ -39,7 +39,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </div>
             <div className="leading-tight">
               <div className="font-serif text-lg text-foreground">Akademya</div>
-              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">YKS · KPSS</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">TYT · AYT · KPSS · LGS</div>
             </div>
           </Link>
 
