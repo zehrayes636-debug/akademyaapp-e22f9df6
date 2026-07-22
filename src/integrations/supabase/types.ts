@@ -401,6 +401,44 @@ export type Database = {
         }
         Relationships: []
       }
+      topic_progress: {
+        Row: {
+          completed: boolean
+          completed_at: string
+          created_at: string
+          id: string
+          topic_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          completed_at?: string
+          created_at?: string
+          id?: string
+          topic_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean
+          completed_at?: string
+          created_at?: string
+          id?: string
+          topic_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "topic_progress_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       topics: {
         Row: {
           id: string
@@ -409,6 +447,7 @@ export type Database = {
           sort_order: number
           subject_id: string
           summary: string | null
+          video_url: string | null
         }
         Insert: {
           id?: string
@@ -417,6 +456,7 @@ export type Database = {
           sort_order?: number
           subject_id: string
           summary?: string | null
+          video_url?: string | null
         }
         Update: {
           id?: string
@@ -425,6 +465,7 @@ export type Database = {
           sort_order?: number
           subject_id?: string
           summary?: string | null
+          video_url?: string | null
         }
         Relationships: [
           {
