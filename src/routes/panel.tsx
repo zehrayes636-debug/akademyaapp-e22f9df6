@@ -74,6 +74,12 @@ function PanelPage() {
         <h1 className="font-serif text-3xl mt-1">Merhaba{user.email ? `, ${user.email.split("@")[0]}` : ""}</h1>
         <p className="text-muted-foreground mt-2">Konu bazlı ilerlemen ve eksik olduğun alanlar.</p>
 
+        <div className="mt-6">
+          <TodayPanel />
+        </div>
+
+
+
         {/* Totals */}
         <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">
           <StatBox label="Toplam" value={totals.total} icon={<BookOpen className="h-4 w-4 text-primary" />} />
