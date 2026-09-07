@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/layout/AppShell";
+import { TodayPanel } from "@/components/TodayPanel";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -73,6 +74,12 @@ function PanelPage() {
         <div className="text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Panelim</div>
         <h1 className="font-serif text-3xl mt-1">Merhaba{user.email ? `, ${user.email.split("@")[0]}` : ""}</h1>
         <p className="text-muted-foreground mt-2">Konu bazlı ilerlemen ve eksik olduğun alanlar.</p>
+
+        <div className="mt-6">
+          <TodayPanel />
+        </div>
+
+
 
         {/* Totals */}
         <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3">

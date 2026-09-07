@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/layout/AppShell";
 import { CountdownCard } from "@/components/CountdownCard";
+import { TodayPanel } from "@/components/TodayPanel";
 import { Button } from "@/components/ui/button";
 import { BookOpen, CalendarDays, Sparkles, CheckSquare, LayoutDashboard, ChevronRight } from "lucide-react";
 
@@ -57,7 +58,13 @@ function Home() {
         </div>
       </section>
 
+      {/* Bugün */}
+      <section className="mx-auto max-w-6xl px-4 py-8">
+        <TodayPanel />
+      </section>
+
       {/* Features */}
+
       <section className="mx-auto max-w-6xl px-4 py-8">
         <div className="mb-6">
           <div className="text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Özellikler</div>

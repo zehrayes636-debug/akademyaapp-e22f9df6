@@ -17,6 +17,14 @@ const NAV = [
   { to: "/asistan", label: "AI Asistan", icon: Sparkles },
 ] as const;
 
+const BOTTOM_NAV = [
+  { to: "/", label: "Bugün", icon: LayoutDashboard },
+  { to: "/konular", label: "Konular", icon: ListChecks },
+  { to: "/sorular", label: "Sorular", icon: BookOpen },
+  { to: "/gorevler", label: "Görevler", icon: CheckSquare },
+  { to: "/asistan", label: "Asistan", icon: Sparkles },
+] as const;
+
 export function AppShell({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [open, setOpen] = useState(false);
@@ -100,7 +108,24 @@ export function AppShell({ children }: { children: ReactNode }) {
         )}
       </header>
 
-      <main>{children}</main>
+      <main className="pb-20 md:pb-0">{children}</main>
+
+      {/* Mobil alt gezinme */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-background/95 backdrop-blur md:hidden">
+        <div className="grid grid-cols-5">
+          {BOTTOM_NAV.map((n) => {
+            const active = n.to === "/" ? path === "/" : path.startsWith(n.to);
+            const Icon = n.icon;
+            return (
+              <Link key={n.to} to={n.to}
+                className={`flex flex-col items-center gap-1 py-2 text-[10px] ${active ? "text-gold" : "text-muted-foreground"}`}>
+                <Icon className="h-5 w-5" />
+                {n.label}
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
 
       <footer className="border-t border-border/60 mt-16">
         <div className="mx-auto max-w-6xl px-4 py-8 text-xs text-muted-foreground flex flex-col sm:flex-row justify-between gap-2">
@@ -108,6 +133,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div>YKS ve KPSS'ye hazırlanan öğrenciler için.</div>
         </div>
       </footer>
+
     </div>
   );
 }

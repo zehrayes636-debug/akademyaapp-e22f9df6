@@ -19,15 +19,18 @@ export const Route = createFileRoute("/test")({
     exam: typeof s.exam === "string" ? s.exam : "",
     subject: typeof s.subject === "string" ? s.subject : "",
     topic: typeof s.topic === "string" ? s.topic : "",
+    level: typeof s.level === "string" ? s.level : "",
+    count: typeof s.count === "string" ? s.count : "20",
   }),
   component: TestPage,
 });
 
 function TestPage() {
-  const { exam, subject, topic } = Route.useSearch();
+  const { exam, subject, topic, level, count } = Route.useSearch();
   const [user, setUser] = useState<User | null>(null);
   const [questions, setQuestions] = useState<Q[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [i, setI] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string | null>>({});
   const [done, setDone] = useState(false);
@@ -38,19 +41,24 @@ function TestPage() {
   useEffect(() => {
     (async () => {
       setLoading(true);
+      setLoadError(false);
+      const limit = count === "all" ? 300 : Math.min(Number(count) || 20, 300);
       let query = supabase.from("questions").select(`
         id, question_text, options, correct_option, explanation, year, difficulty, topic_id,
         topics!inner(id, name, summary, subjects!inner(id, exam_id, exams!inner(slug)))
-      `).limit(20);
+      `).limit(count === "all" ? 300 : limit * 3);
       if (topic) query = query.eq("topic_id", topic);
       else if (subject) query = query.eq("topics.subject_id", subject);
       else if (exam) query = query.eq("topics.subjects.exams.slug", exam);
-      const { data } = await query;
+      if (level && level !== "all") query = query.eq("difficulty", level);
+      const { data, error } = await query;
+      if (error) setLoadError(true);
       const shuffled = (data as unknown as Q[] ?? []).sort(() => Math.random() - 0.5);
-      setQuestions(shuffled);
+      setQuestions(count === "all" ? shuffled : shuffled.slice(0, limit));
       setLoading(false);
     })();
-  }, [exam, subject, topic]);
+  }, [exam, subject, topic, level, count]);
+
 
   const current = questions[i];
 
@@ -79,7 +87,8 @@ function TestPage() {
     setDone(true);
   };
 
-  if (loading) return <AppShell><div className="p-16 text-center text-muted-foreground">Yükleniyor...</div></AppShell>;
+  if (loading) return <AppShell><div className="mx-auto max-w-3xl px-4 py-10 space-y-4">{Array.from({length:3}).map((_,k)=>(<div key={k} className="paper-card rounded-lg p-6 animate-pulse"><div className="h-4 w-2/3 bg-muted rounded mb-3" /><div className="h-3 w-full bg-muted rounded" /></div>))}</div></AppShell>;
+  if (loadError) return <AppShell><div className="p-16 text-center"><p className="text-muted-foreground mb-4">Test yüklenemedi. Bağlantını kontrol edip tekrar dene.</p><Link to="/sorular"><Button variant="outline">Filtrelere dön</Button></Link></div></AppShell>;
   if (questions.length === 0) return <AppShell><div className="p-16 text-center"><p className="text-muted-foreground mb-4">Bu filtrelere uygun soru bulunamadı.</p><Link to="/sorular"><Button variant="outline">Filtrelere dön</Button></Link></div></AppShell>;
 
   if (done) {
