@@ -11,18 +11,36 @@ import { Search, Play, BookOpen, ChevronRight } from "lucide-react";
 
 export const Route = createFileRoute("/sorular")({ component: QuestionsPage });
 
+const COUNTS = ["5", "10", "20", "30", "40", "50", "all"] as const;
+const LEVELS = [
+  { v: "all", label: "Karışık seviye" },
+  { v: "kolay", label: "Kolay" },
+  { v: "orta", label: "Orta" },
+  { v: "zor", label: "Zor" },
+] as const;
+
 function QuestionsPage() {
   const [examSlug, setExamSlug] = useState<string>("all");
   const [subjectId, setSubjectId] = useState<string>("all");
   const [topicId, setTopicId] = useState<string>("all");
+  const [level, setLevel] = useState<string>("all");
+  const [count, setCount] = useState<string>("20");
   const [q, setQ] = useState("");
+  const [debouncedQ, setDebouncedQ] = useState("");
+
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedQ(q.trim()), 350);
+    return () => clearTimeout(t);
+  }, [q]);
 
   const { data: exams } = useQuery({
     queryKey: ["exams"],
+    staleTime: 5 * 60_000,
     queryFn: async () => (await supabase.from("exams").select("*").order("sort_order")).data ?? [],
   });
   const { data: subjects } = useQuery({
     queryKey: ["subjects", examSlug],
+    staleTime: 5 * 60_000,
     queryFn: async () => {
       let q = supabase.from("subjects").select("id, name, slug, exam_id, exams!inner(slug)").order("sort_order");
       if (examSlug !== "all") q = q.eq("exams.slug", examSlug);
@@ -31,6 +49,7 @@ function QuestionsPage() {
   });
   const { data: topics } = useQuery({
     queryKey: ["topics", subjectId],
+    staleTime: 5 * 60_000,
     queryFn: async () => {
       if (subjectId === "all") return [];
       return (await supabase.from("topics").select("*").eq("subject_id", subjectId).order("sort_order")).data ?? [];
@@ -38,8 +57,9 @@ function QuestionsPage() {
     enabled: subjectId !== "all",
   });
 
-  const { data: questions, isLoading } = useQuery({
-    queryKey: ["questions", examSlug, subjectId, topicId, q],
+  const { data: questions, isLoading, isError, refetch } = useQuery({
+    queryKey: ["questions", examSlug, subjectId, topicId, level, debouncedQ],
+    staleTime: 60_000,
     queryFn: async () => {
       let query = supabase.from("questions").select(`
         id, question_text, year, difficulty, source, correct_option,
@@ -48,7 +68,8 @@ function QuestionsPage() {
       if (topicId !== "all") query = query.eq("topic_id", topicId);
       else if (subjectId !== "all") query = query.eq("topics.subject_id", subjectId);
       else if (examSlug !== "all") query = query.eq("topics.subjects.exams.slug", examSlug);
-      if (q.trim()) query = query.ilike("question_text", `%${q.trim()}%`);
+      if (level !== "all") query = query.eq("difficulty", level);
+      if (debouncedQ) query = query.ilike("question_text", `%${debouncedQ}%`);
       const { data, error } = await query;
       if (error) throw error;
       return data ?? [];
@@ -60,23 +81,22 @@ function QuestionsPage() {
     if (examSlug !== "all") params.set("exam", examSlug);
     if (subjectId !== "all") params.set("subject", subjectId);
     if (topicId !== "all") params.set("topic", topicId);
+    if (level !== "all") params.set("level", level);
+    params.set("count", count);
     return `/test?${params.toString()}`;
-  }, [examSlug, subjectId, topicId]);
+  }, [examSlug, subjectId, topicId, level, count]);
 
   return (
     <AppShell>
-      <div className="mx-auto max-w-6xl px-4 py-10">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:py-10">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>
             <div className="text-[10px] uppercase tracking-[0.24em] text-muted-foreground">Soru Bankası</div>
-            <h1 className="font-serif text-3xl mt-1">Çıkmış sorular</h1>
+            <h1 className="font-serif text-2xl sm:text-3xl mt-1">Çıkmış sorular</h1>
           </div>
-          <a href={testHref}>
-            <Button className="gap-2"><Play className="h-4 w-4" /> Bu filtrelerle test çöz</Button>
-          </a>
         </div>
 
-        <div className="paper-card rounded-lg p-4 mb-6 grid gap-3 md:grid-cols-4">
+        <div className="paper-card rounded-lg p-4 mb-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Select value={examSlug} onValueChange={(v) => { setExamSlug(v); setSubjectId("all"); setTopicId("all"); }}>
             <SelectTrigger><SelectValue placeholder="Sınav" /></SelectTrigger>
             <SelectContent><SelectItem value="all">Tüm sınavlar</SelectItem>{exams?.map(e => <SelectItem key={e.id} value={e.slug}>{e.name}</SelectItem>)}</SelectContent>
@@ -94,6 +114,28 @@ function QuestionsPage() {
             <Input className="pl-9" placeholder="Soru içinde ara..." value={q} onChange={e => setQ(e.target.value)} />
           </div>
         </div>
+
+        {/* Test kurucu */}
+        <div className="paper-card rounded-lg p-4 mb-6">
+          <div className="text-[10px] uppercase tracking-[0.24em] text-muted-foreground mb-3">Test Oluştur</div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <Select value={level} onValueChange={setLevel}>
+              <SelectTrigger><SelectValue placeholder="Zorluk" /></SelectTrigger>
+              <SelectContent>{LEVELS.map(l => <SelectItem key={l.v} value={l.v}>{l.label}</SelectItem>)}</SelectContent>
+            </Select>
+            <Select value={count} onValueChange={setCount}>
+              <SelectTrigger><SelectValue placeholder="Soru sayısı" /></SelectTrigger>
+              <SelectContent>{COUNTS.map(c => <SelectItem key={c} value={c}>{c === "all" ? "Tüm sorular" : `${c} soru`}</SelectItem>)}</SelectContent>
+            </Select>
+            <a href={testHref} className="block">
+              <Button className="w-full gap-2"><Play className="h-4 w-4" /> Teste başla</Button>
+            </a>
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Seçtiğin sınav, ders, konu ve zorluk filtreleriyle {count === "all" ? "tüm sorulardan" : `${count} soruluk`} bir test hazırlanır.
+          </p>
+        </div>
+
 
         {isLoading ? (
           <div className="text-center text-muted-foreground py-16">Yükleniyor...</div>
