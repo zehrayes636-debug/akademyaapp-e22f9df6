@@ -17,6 +17,14 @@ const NAV = [
   { to: "/asistan", label: "AI Asistan", icon: Sparkles },
 ] as const;
 
+const BOTTOM_NAV = [
+  { to: "/", label: "Bugün", icon: LayoutDashboard },
+  { to: "/konular", label: "Konular", icon: ListChecks },
+  { to: "/sorular", label: "Sorular", icon: BookOpen },
+  { to: "/gorevler", label: "Görevler", icon: CheckSquare },
+  { to: "/asistan", label: "Asistan", icon: Sparkles },
+] as const;
+
 export function AppShell({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [open, setOpen] = useState(false);
