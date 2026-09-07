@@ -137,8 +137,22 @@ function QuestionsPage() {
         </div>
 
 
-        {isLoading ? (
-          <div className="text-center text-muted-foreground py-16">Yükleniyor...</div>
+        {isError ? (
+          <div className="text-center py-16 paper-card rounded-lg">
+            <p className="text-muted-foreground mb-3">Sorular yüklenemedi.</p>
+            <Button variant="outline" onClick={() => refetch()}>Tekrar dene</Button>
+          </div>
+        ) : isLoading ? (
+          <div className="space-y-3">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="paper-card rounded-lg p-5 animate-pulse">
+                <div className="h-3 w-40 bg-muted rounded mb-3" />
+                <div className="h-4 w-full bg-muted rounded mb-2" />
+                <div className="h-4 w-2/3 bg-muted rounded" />
+              </div>
+            ))}
+          </div>
+
         ) : questions?.length === 0 ? (
           <div className="text-center text-muted-foreground py-16 paper-card rounded-lg">
             <BookOpen className="h-10 w-10 mx-auto mb-3 text-muted-foreground/60" />
