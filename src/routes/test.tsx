@@ -87,7 +87,8 @@ function TestPage() {
     setDone(true);
   };
 
-  if (loading) return <AppShell><div className="p-16 text-center text-muted-foreground">Yükleniyor...</div></AppShell>;
+  if (loading) return <AppShell><div className="mx-auto max-w-3xl px-4 py-10 space-y-4">{Array.from({length:3}).map((_,k)=>(<div key={k} className="paper-card rounded-lg p-6 animate-pulse"><div className="h-4 w-2/3 bg-muted rounded mb-3" /><div className="h-3 w-full bg-muted rounded" /></div>))}</div></AppShell>;
+  if (loadError) return <AppShell><div className="p-16 text-center"><p className="text-muted-foreground mb-4">Test yüklenemedi. Bağlantını kontrol edip tekrar dene.</p><Link to="/sorular"><Button variant="outline">Filtrelere dön</Button></Link></div></AppShell>;
   if (questions.length === 0) return <AppShell><div className="p-16 text-center"><p className="text-muted-foreground mb-4">Bu filtrelere uygun soru bulunamadı.</p><Link to="/sorular"><Button variant="outline">Filtrelere dön</Button></Link></div></AppShell>;
 
   if (done) {
