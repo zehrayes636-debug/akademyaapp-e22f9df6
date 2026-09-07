@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { AppShell } from "@/components/layout/AppShell";
 import { CountdownCard } from "@/components/CountdownCard";
+import { TodayPanel } from "@/components/TodayPanel";
 import { Button } from "@/components/ui/button";
 import { BookOpen, CalendarDays, Sparkles, CheckSquare, LayoutDashboard, ChevronRight } from "lucide-react";
 
