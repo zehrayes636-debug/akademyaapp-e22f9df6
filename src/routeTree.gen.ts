@@ -9,63 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as YanlislarimRouteImport } from './routes/yanlislarim'
-import { Route as TestRouteImport } from './routes/test'
-import { Route as SorularRouteImport } from './routes/sorular'
-import { Route as SifreSifirlaRouteImport } from './routes/sifre-sifirla'
-import { Route as ProgramRouteImport } from './routes/program'
-import { Route as PanelRouteImport } from './routes/panel'
-import { Route as KonularRouteImport } from './routes/konular'
-import { Route as GorevlerRouteImport } from './routes/gorevler'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AsistanRouteImport } from './routes/asistan'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SorularIdRouteImport } from './routes/sorular.$id'
+import { Route as AsistanRouteImport } from './routes/asistan'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as GorevlerRouteImport } from './routes/gorevler'
+import { Route as KonularRouteImport } from './routes/konular'
+import { Route as PanelRouteImport } from './routes/panel'
+import { Route as ProgramRouteImport } from './routes/program'
+import { Route as SifreSifirlaRouteImport } from './routes/sifre-sifirla'
+import { Route as SorularRouteImport } from './routes/sorular'
+import { Route as TestRouteImport } from './routes/test'
+import { Route as YanlislarimRouteImport } from './routes/yanlislarim'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as SorularIdRouteImport } from './routes/sorular.$id'
 
-const YanlislarimRoute = YanlislarimRouteImport.update({
-  id: '/yanlislarim',
-  path: '/yanlislarim',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TestRoute = TestRouteImport.update({
-  id: '/test',
-  path: '/test',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SorularRoute = SorularRouteImport.update({
-  id: '/sorular',
-  path: '/sorular',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SifreSifirlaRoute = SifreSifirlaRouteImport.update({
-  id: '/sifre-sifirla',
-  path: '/sifre-sifirla',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProgramRoute = ProgramRouteImport.update({
-  id: '/program',
-  path: '/program',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PanelRoute = PanelRouteImport.update({
-  id: '/panel',
-  path: '/panel',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const KonularRoute = KonularRouteImport.update({
-  id: '/konular',
-  path: '/konular',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GorevlerRoute = GorevlerRouteImport.update({
-  id: '/gorevler',
-  path: '/gorevler',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AsistanRoute = AsistanRouteImport.update({
@@ -73,20 +33,60 @@ const AsistanRoute = AsistanRouteImport.update({
   path: '/asistan',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GorevlerRoute = GorevlerRouteImport.update({
+  id: '/gorevler',
+  path: '/gorevler',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KonularRoute = KonularRouteImport.update({
+  id: '/konular',
+  path: '/konular',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PanelRoute = PanelRouteImport.update({
+  id: '/panel',
+  path: '/panel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgramRoute = ProgramRouteImport.update({
+  id: '/program',
+  path: '/program',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SifreSifirlaRoute = SifreSifirlaRouteImport.update({
+  id: '/sifre-sifirla',
+  path: '/sifre-sifirla',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SorularRoute = SorularRouteImport.update({
+  id: '/sorular',
+  path: '/sorular',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestRoute = TestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const YanlislarimRoute = YanlislarimRouteImport.update({
+  id: '/yanlislarim',
+  path: '/yanlislarim',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SorularIdRoute = SorularIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => SorularRoute,
-} as any)
-const ApiChatRoute = ApiChatRouteImport.update({
-  id: '/api/chat',
-  path: '/api/chat',
-  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -200,67 +200,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/yanlislarim': {
-      id: '/yanlislarim'
-      path: '/yanlislarim'
-      fullPath: '/yanlislarim'
-      preLoaderRoute: typeof YanlislarimRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/test': {
-      id: '/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof TestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sorular': {
-      id: '/sorular'
-      path: '/sorular'
-      fullPath: '/sorular'
-      preLoaderRoute: typeof SorularRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sifre-sifirla': {
-      id: '/sifre-sifirla'
-      path: '/sifre-sifirla'
-      fullPath: '/sifre-sifirla'
-      preLoaderRoute: typeof SifreSifirlaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/program': {
-      id: '/program'
-      path: '/program'
-      fullPath: '/program'
-      preLoaderRoute: typeof ProgramRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/panel': {
-      id: '/panel'
-      path: '/panel'
-      fullPath: '/panel'
-      preLoaderRoute: typeof PanelRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/konular': {
-      id: '/konular'
-      path: '/konular'
-      fullPath: '/konular'
-      preLoaderRoute: typeof KonularRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/gorevler': {
-      id: '/gorevler'
-      path: '/gorevler'
-      fullPath: '/gorevler'
-      preLoaderRoute: typeof GorevlerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/asistan': {
@@ -270,11 +214,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AsistanRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gorevler': {
+      id: '/gorevler'
+      path: '/gorevler'
+      fullPath: '/gorevler'
+      preLoaderRoute: typeof GorevlerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/konular': {
+      id: '/konular'
+      path: '/konular'
+      fullPath: '/konular'
+      preLoaderRoute: typeof KonularRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/panel': {
+      id: '/panel'
+      path: '/panel'
+      fullPath: '/panel'
+      preLoaderRoute: typeof PanelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/program': {
+      id: '/program'
+      path: '/program'
+      fullPath: '/program'
+      preLoaderRoute: typeof ProgramRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sifre-sifirla': {
+      id: '/sifre-sifirla'
+      path: '/sifre-sifirla'
+      fullPath: '/sifre-sifirla'
+      preLoaderRoute: typeof SifreSifirlaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sorular': {
+      id: '/sorular'
+      path: '/sorular'
+      fullPath: '/sorular'
+      preLoaderRoute: typeof SorularRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/yanlislarim': {
+      id: '/yanlislarim'
+      path: '/yanlislarim'
+      fullPath: '/yanlislarim'
+      preLoaderRoute: typeof YanlislarimRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sorular/$id': {
@@ -283,13 +290,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/sorular/$id'
       preLoaderRoute: typeof SorularIdRouteImport
       parentRoute: typeof SorularRoute
-    }
-    '/api/chat': {
-      id: '/api/chat'
-      path: '/api/chat'
-      fullPath: '/api/chat'
-      preLoaderRoute: typeof ApiChatRouteImport
-      parentRoute: typeof rootRouteImport
     }
   }
 }
